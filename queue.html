@@ -8,18 +8,28 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Švieslentė</title>
 </head>
-<body class="h-screen flex flex-col justify-center items-center w-full bg-gray-300">
-    <main>
-        <h1>SPECIALISTAS 1</h1>
-        <p><strong><span id="spec1"></span></strong></p>
-        <p>Laukiamasis:</p>
-        <ul id="specialist1_queue"></ul>
-        <h1>SPECIALISTAS 2</h1>
-        <p><strong><span id="spec2"></span></strong></p>
-        <p>Laukiamasis:</p>
-        <ul id="specialist2_queue"></ul>
-        <button id="loadDemoContentBtn" class="px-4 py-2 bg-gray-700 text-white rounded font-semibold hover:bg-gray-800 m-2">Ikelti pavyzdinius duomenis</button>
-        <a href="/" class="px-4 py-2 bg-gray-700 text-white rounded font-semibold hover:bg-gray-800 m-2">Grizti i pradini</a>
+<body class="min-h-screen flex flex-col justify-center items-center w-full bg-gray-300 p-2 lg:p-8">
+    <main class="bg-white h-full w-full shadow-xl rounded p-2 lg:p-4 flex flex-col">
+        <div class="flex-1 w-full flex lg:flex-row flex-col">
+            <div class="w-full lg:w-1/2 border-b-2 lg:border-b-0 lg:border-r-2 p-4">
+                <h1 class="text-center text-3xl lg:text-5xl font-bold">SPECIALISTAS 1</h1>
+                <p class="text-xl w-full text-left">Eikite prie langelio:</p>
+                <p class="text-center text-4xl lg:text-6xl bg-green-500 text-white mt-2" id="spec1"></p>
+                <p class="text-xl w-full text-left mt-8">Eilės nr:</p>
+                <ul id="specialist1_queue"></ul>
+            </div>
+            <div class="w-full lg:w-1/2 p-4">
+                <h1 class="text-center text-3xl lg:text-5xl font-bold">SPECIALISTAS 2</h1>
+                 <p class="text-xl w-full text-left">Eikite prie langelio:</p>
+                 <p class="text-center text-4xl lg:text-6xl bg-green-500 text-white mt-2" id="spec2"></p>
+                <p class="text-xl w-full text-left mt-8">Eilės nr:</p>
+                <ul id="specialist2_queue"></ul>
+            </div>
+        </div>
+        <footer class="mt-4 mb-4">
+            <button id="loadDemoContentBtn" class="px-4 py-2 bg-gray-700 text-white rounded font-semibold hover:bg-gray-800 m-2">Įkelti demo</button>
+            <a href="/" class="px-4 py-2 bg-gray-700 text-white rounded font-semibold hover:bg-gray-800">Pradinis ekranas</a>
+        </footer>
     </main>
     <script src="js/app.js"></script>
 </body>

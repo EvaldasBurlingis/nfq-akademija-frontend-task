@@ -28,13 +28,22 @@ let demoData = [];
 window.addEventListener("storage", () => {
     console.log("Local storage was updated on another page");
     if (localStorage.length !== 0) {
+        let list = localStorage.getItem("list");
+        list = JSON.parse(list);
         // if queue page is open update its contents
         if (window.location.pathname === "/queue.html") {
-            let list = localStorage.getItem("list");
-            list = JSON.parse(list);
             clearWaitingList();
             loadData(list);
         }
+
+        // specialist page
+        if (window.location.pathname === "/management.html") {
+            //filter people who are waiting
+            const waiting = list.filter(client => !client.being_served)
+            const totalNumberInLine = document.querySelector("#totalWaitingList");
+            totalNumberInLine.textContent = waiting.length;
+        }
+
     } else {
         if (window.location.pathname === "/queue.html") {
             // if local storage is empty
@@ -45,6 +54,12 @@ window.addEventListener("storage", () => {
             s1.textContent = "";
             s2.textContent = "";
             clearWaitingList();
+        }
+
+        if(window.location.pathname === "/management.html"){
+            const waiting = document.querySelector("#totalWaitingList");
+
+            waiting.textContent = "0";
         }
     }
 })
@@ -57,6 +72,14 @@ if(localStorage.length !== 0){
 
     if (window.location.pathname === "/queue.html") {
         loadDemoContentBtn.style.display = "none";
+    }
+
+    // specialist page
+    if (window.location.pathname === "/management.html") {
+        //filter people who are waiting
+        const waiting = list.filter(client => !client.being_served)
+        const totalNumberInLine = document.querySelector("#totalWaitingList");
+        totalNumberInLine.textContent = waiting.length;
     }
 }
 
@@ -81,7 +104,7 @@ if (registerFormBtn) {
         // dom elements
         const form = document.querySelector("#registerForm");
         const inputName = document.querySelector("#clientName");
-        const inputSpecialist = document.querySelector("#specialistId");
+        const inputSpecialist = document.querySelector("#selectSpecialist");
         const inputReason = document.querySelector("#visitReason");
 
         form.style.display = "none";
@@ -159,6 +182,8 @@ function loadData(data) {
         const clientBeingServed = document.querySelector(client.specialist_id === 1 ? "#spec1" : "#spec2");
         const waitingList = document.querySelector(client.specialist_id === 1 ? "#specialist1_queue" : "#specialist2_queue");
         let li = document.createElement("li");
+
+        li.classList.add("w-full", "bg-gray-600", "my-2", "py-4", "text-2xl", "text-center", "text-white", "font-bold", "font-sans");
 
         if (window.location.pathname === "/queue.html") {
             if(client.being_served){
