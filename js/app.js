@@ -42,6 +42,7 @@ window.addEventListener("storage", () => {
             const waiting = list.filter(client => !client.being_served)
             const totalNumberInLine = document.querySelector("#totalWaitingList");
             totalNumberInLine.textContent = waiting.length;
+            clearSpecialistList();
             createSpecialistTable(list);
         }
 
@@ -59,6 +60,7 @@ window.addEventListener("storage", () => {
 
         if(window.location.pathname === "/management.html"){
             const waiting = document.querySelector("#totalWaitingList");
+            clearSpecialistList();
             waiting.textContent = "0";
         }
     }
@@ -70,8 +72,8 @@ function createSpecialistTable(clients) {
     const specialist1Clients = clients.filter(client => client.specialist_id === 1);
     const specialist2Clients = clients.filter(client => client.specialist_id === 2);
     const spec1Table = document.querySelector("#spec1Table");
+    const spec2Table = document.querySelector("#spec2Table");
    
-
 
     specialist1Clients.map(client => {
         let tr = document.createElement("tr");
@@ -89,6 +91,24 @@ function createSpecialistTable(clients) {
                                 Statusas</th>
         `
         spec1Table.appendChild(tr);
+    })
+
+    specialist2Clients.map(client => {
+        let tr = document.createElement("tr");
+        tr.classList.add("border-b-2", "text-center", "text-xs", "list-item")
+        tr.innerHTML = `
+                            <th class="p-1  font-sans uppercase border-gray-500 border-r">
+                                ${client.client_id}</th>
+                            <th class="p-1  font-sans uppercase border-gray-500 border-r">
+                                ${client.client_name}</th>
+                            <th class="p-1  font-sans uppercase border-gray-500 border-r">
+                                ${client.visit_reason}</th>
+                            <th class="p-1  font-sans uppercase border-gray-500 border-r">
+                                Aptarnautas</th>
+                            <th class="p-1  font-sans uppercase border-gray-500 border-r">
+                                Statusas</th>
+        `
+        spec2Table.appendChild(tr);
     })
 }
 
@@ -231,6 +251,15 @@ function clearWaitingList(){
     if(li.length !== 0){
         li.forEach(listItem => listItem.remove());
     }
+}
+
+function clearSpecialistList() {
+    const spec1Table = document.querySelector("#spec1Table");
+    const spec2Table = document.querySelector("#spec2Table");
+
+    spec1Table.innerHTML = "";
+    spec2Table.innerHTML = "";
+
 }
 
 
