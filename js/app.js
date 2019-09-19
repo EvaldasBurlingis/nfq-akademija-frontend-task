@@ -118,15 +118,25 @@ if (registerFormBtn) {
 }
 
 function showIdNumber(clientId) {
-    const main = document.querySelector("#register");
+    // const main = document.querySelector("#register");
+    const div = document.querySelector("#show-queue-number");
     let h1 = document.createElement("h1");
     let p = document.createElement("p");
 
-    p.textContent = "Jusu eiles nr:";
+    // add styling classses to elements
+    div.classList.remove("hidden");
+    div.classList.add("h-64", "w-full", "flex", "flex-col", "justify-center", "items-center", "mb-4");
+
+    p.classList.add("text-xl", "text-gray-700", "uppercase", "underline", "leading-loose", "font-semibold", "w-full", "text-left");
+    p.textContent = "Jūsų eilės nr:";
+
+    h1.classList.add("text-15xl", "p-2", "bg-green-500", "text-white", "font-bold", "font-sans", "block", "w-full", "text-center")
     h1.textContent = clientId;
 
-    main.appendChild(p);
-    main.appendChild(h1);
+    div.appendChild(p);
+    div.appendChild(h1);
+
+    
 }
 
 // load demo data on click

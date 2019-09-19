@@ -8,29 +8,30 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Registracija</title>
 </head>
-<body>
-    <mainid="register">
-        <h1>Kliento registracija</h1>
+<body class="h-screen flex flex-col justify-center items-center w-full bg-gray-300">
+    <main id="register" class="bg-white p-4 lg:p-8 rounded shadow-xl">
+        <h1 class="text-3xl lg:text-6xl font-sans uppercase font-bold text-center">Kliento registracija</h1>
+        <div id="show-queue-number" class="hidden"></div>
         <!-- Default form register -->
-        <formaction="#" id="registerForm">
-            <div>
-                <label for="clientName">Kliento vardas</label>
-                <input type="text" id="clientName" placeholder="Vardas" required>
+        <form action="#" id="registerForm" class="w-full max-w-lg mx-auto px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+                <label for="clientName" class="block text-gray-700 text-sm font-bold mb-2">Kliento vardas:</label>
+                <input type="text" id="clientName" placeholder="Vardas" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
             </div>
 
             <!-- Choose specialist -->
-            <div>
-                <label for="specialistId">Pasirinkti specialista</label>
-                <select id="specialistId" required>
-                    <option>1</option>
-                    <option>2</option>
+            <div class="mb-4 relative block">
+                <label for="specialistId" class="block text-gray-700 text-sm font-bold mb-2">Pasirinkti specialistą:</label>
+                <select id="specialistId" required class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                    <option>Specialistas 1</option>
+                    <option>Specialistas 2</option>
                 </select>
             </div>
 
             <!-- Choose specialist -->
-            <div>
-                <label for="visitReason">Vizito priežastis</label>
-                <select id="visitReason" required>
+            <div class="mb-4 relative block">
+                <label for="visitReason" class="block text-gray-700 text-sm font-bold mb-2">Vizito priežastis:</label>
+                <select id="visitReason" required class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                     <option>Siuntos sekimas</option>
                     <option>Kainų skaičiuoklė</option>
                     <option>Kita</option>
@@ -40,13 +41,15 @@
         
         
             <!-- Sign up button -->
-            <button type="submit" id="formBtn">Registruoti</button>
+            <button type="submit" id="formBtn" class="block px-4 py-2 bg-green-500 text-white rounded font-semibold hover:bg-green-600">Registruoti</button>
      
         
         </form>
         <!-- Default form register -->
-
-        <a href="/">Grizti i pradini</a>
+        <div class="block flex flex-row justify-center">
+            <a href="/" class="px-4 py-2 bg-gray-700 text-white rounded font-semibold hover:bg-gray-800 m-2">Pradinis</a>
+            <a href="/queue.html" class="px-4 py-2 bg-gray-700 text-white rounded font-semibold hover:bg-gray-800 m-2">Laukimo sąrašas</a>
+        </div>
     </main>
     <script src="js/app.js"></script>
 </body>
