@@ -30,6 +30,9 @@ Jei jau esate instaliavęs git, atsidarykite terminal langą kompiuteryje ir nuk
 |- management.html
  ```
 
+## Funkcijos
+
+* [Kliento registracija](https://evaldas-nfq.netlify.com/register.html) - Galimybė užregistruoti naują klientą, kuris bus pridėtas į laukimo eilę. Registracijos metu užpildomi laukeliai: kliento vardas, specialisto pasirinkimas, vizito priežastis. Viską užpildžius ir paspaudus registruoti mygtuka, gaunamas eilės numeris, kuris yra pridedamas į laukiančiųjų eilėje lauką. Kliento registracija ir laukimo sąrašas yra atnaujinami realiu laiku, stebint localStorage pasikeitimus, todėl yra galimybė turėti atidarytus 2 skirtingus tabus(registracija ir laukimo sąrašas) ir jie bus atnaujinti realiu laiku.
 
 
  ## Projektas sukurtas naudojant

@@ -56,7 +56,7 @@ if(localStorage.length !== 0){
     loadData(list);
 
     if (window.location.pathname === "/queue.html") {
-        loadDemoContentBtn.disabled = true;
+        loadDemoContentBtn.style.display = "none";
     }
 }
 
