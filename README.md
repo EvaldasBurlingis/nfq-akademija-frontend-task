@@ -12,6 +12,23 @@ Jei jau esate instaliavęs git, atsidarykite terminal langą kompiuteryje ir nuk
 
  `git clone https://github.com/EvaldasBurlingis/nfq-akademija-frontend-task.git`
 
+ ## Failų sistema
+ ```
+|- css/
+    |- style.css
+|- js/
+    |- app.js
+    |- data.js
+|- data/
+    |- demo.json
+|- index.html 
+|- queue.html
+|- administrator.html
+|- register
+ ```
+
+
+
  ## Projektas sukurtas naudojant
 
- * [tailwindcss](https://tailwindcss.com) - stilizuotas css dizainas, greitesniam projekto sukūrimui
+ * [TailwindCSS](https://tailwindcss.com) - stilizuotas css dizainas, greitesniam projekto sukūrimui

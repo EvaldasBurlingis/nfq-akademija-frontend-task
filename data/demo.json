@@ -1,0 +1,58 @@
+[
+    {
+        "client_id": 28,
+        "client_name": "John",
+        "specialist_id": 1,
+        "visit_reason": "Siuntos sekimas",
+        "waiting": true,
+        "being_served": true
+    },
+    {
+        "client_id": 29,
+        "client_name": "John",
+        "specialist_id": 2,
+        "visit_reason": "Kainų skaičiuoklė",
+        "waiting": true,
+        "being_served": true
+    },
+    {
+        "client_id": 30,
+        "client_name": "John",
+        "specialist_id": 2,
+        "visit_reason": "Kainų skaičiuoklė",
+        "waiting": true,
+        "being_served": false
+    },
+    {
+        "client_id": 31,
+        "client_name": "John",
+        "specialist_id": 1,
+        "visit_reason": "Siuntos sekimas",
+        "waiting": true,
+        "being_served": false
+    },
+    {
+        "client_id": 32,
+        "client_name": "John",
+        "specialist_id": 2,
+        "visit_reason": "Kainų skaičiuoklė",
+        "waiting": true,
+        "being_served": false
+    },
+    {
+        "client_id": 33,
+        "client_name": "John",
+        "specialist_id": 2,
+        "visit_reason": "Kainų skaičiuoklė",
+        "waiting": true,
+        "being_served": false
+    },
+    {
+        "client_id": 34,
+        "client_name": "John",
+        "specialist_id": 1,
+        "visit_reason": "Kainų skaičiuoklė",
+        "waiting": true,
+        "being_served": false
+    }
+]
