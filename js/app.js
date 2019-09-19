@@ -42,6 +42,7 @@ window.addEventListener("storage", () => {
             const waiting = list.filter(client => !client.being_served)
             const totalNumberInLine = document.querySelector("#totalWaitingList");
             totalNumberInLine.textContent = waiting.length;
+            createSpecialistTable(list);
         }
 
     } else {
@@ -58,11 +59,38 @@ window.addEventListener("storage", () => {
 
         if(window.location.pathname === "/management.html"){
             const waiting = document.querySelector("#totalWaitingList");
-
             waiting.textContent = "0";
         }
     }
 })
+
+
+//create table that filters clients by specialists
+function createSpecialistTable(clients) {
+    const specialist1Clients = clients.filter(client => client.specialist_id === 1);
+    const specialist2Clients = clients.filter(client => client.specialist_id === 2);
+    const spec1Table = document.querySelector("#spec1Table");
+   
+
+
+    specialist1Clients.map(client => {
+        let tr = document.createElement("tr");
+        tr.classList.add("border-b-2", "text-center", "text-xs")
+        tr.innerHTML = `
+                            <th class="p-1  font-sans uppercase border-gray-500 border-r">
+                                ${client.client_id}</th>
+                            <th class="p-1  font-sans uppercase border-gray-500 border-r">
+                                ${client.client_name}</th>
+                            <th class="p-1  font-sans uppercase border-gray-500 border-r">
+                                ${client.visit_reason}</th>
+                            <th class="p-1  font-sans uppercase border-gray-500 border-r">
+                                Aptarnautas</th>
+                            <th class="p-1  font-sans uppercase border-gray-500 border-r">
+                                Statusas</th>
+        `
+        spec1Table.appendChild(tr);
+    })
+}
 
 // check for list in local storage
 if(localStorage.length !== 0){
@@ -80,6 +108,7 @@ if(localStorage.length !== 0){
         const waiting = list.filter(client => !client.being_served)
         const totalNumberInLine = document.querySelector("#totalWaitingList");
         totalNumberInLine.textContent = waiting.length;
+        createSpecialistTable(list);
     }
 }
 
