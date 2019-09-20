@@ -1,20 +1,21 @@
-//////////////////////////////////
-// DOM ELEMENTS
-////////////////////////////////
 
-// buttons
+//  DOM ELEMENTS
 const loadDemoContentBtn = document.querySelector("#loadDemoContentBtn")
 const saveLocalStorageBtn = document.querySelector("#saveLocalStorageBtn");
 const registerFormBtn = document.querySelector("#formBtn");
+const clientsInLine = document.querySelector("#totalWaitingList");
 
-// variables
+// VARIABLES
+const URL = window.location.pathname;
 let demoData = [];
+let data;
 
 
 
 //////////////////////////////////
 // FUNCTIONS
 ////////////////////////////////
+
 // fetch data from json file
 (function fetchData() {
     fetch("../data/demo.json")
@@ -24,30 +25,36 @@ let demoData = [];
         .catch(err => console.log(err))
 })();
 
-// look for local storage changes to update pages if they are open on different tabs
-window.addEventListener("storage", () => {
-    console.log("Local storage was updated on another page");
-    if (localStorage.length !== 0) {
-        let list = localStorage.getItem("list");
-        list = JSON.parse(list);
-        // if queue page is open update its contents
-        if (window.location.pathname === "/queue.html") {
-            clearWaitingList();
-            loadData(list);
-        }
+function getDataFromStorage() {
+    let data;
+    data = localStorage.getItem("client_list");
+    data = JSON.parse(data);
 
-        // specialist page
-        if (window.location.pathname === "/management.html") {
+    return data;
+}
+// look for local storage changes
+// react in pages that are affected
+window.addEventListener("storage", () => {
+
+    if (localStorage.length !== 0) {
+        data = getDataFromStorage();
+
+
+        if(URL === "/queue.html") {
+            clearWaitingList();
+            loadData(data);
+        } 
+        
+        if (URL === "/management.html") {
             //filter people who are waiting
-            const waiting = list.filter(client => !client.being_served)
-            const totalNumberInLine = document.querySelector("#totalWaitingList");
-            totalNumberInLine.textContent = waiting.length;
+            const waiting = data.filter(client => !client.being_served)
+            clientsInLine.textContent = waiting.length;
             clearSpecialistList();
-            createSpecialistTable(list);
+            createSpecialistTable(data);
         }
 
     } else {
-        if (window.location.pathname === "/queue.html") {
+        if (URL === "/queue.html") {
             // if local storage is empty
             // reset clients that are being served
             //reset queue list
@@ -58,10 +65,9 @@ window.addEventListener("storage", () => {
             clearWaitingList();
         }
 
-        if(window.location.pathname === "/management.html"){
-            const waiting = document.querySelector("#totalWaitingList");
+        if(URL === "/management.html"){
             clearSpecialistList();
-            waiting.textContent = "0";
+            clientsInLine.textContent = "0";
         }
     }
 })
@@ -77,7 +83,7 @@ function createSpecialistTable(clients) {
 
     specialist1Clients.map(client => {
         let tr = document.createElement("tr");
-        tr.classList.add("border-b-2", "text-center", "text-xs")
+        tr.classList.add("border-b-2", "text-center", "text-xs", "font-normal", "list-item", "hover:bg-gray-800", "hover:text-white", "cursor-default")
         tr.innerHTML = `
                             <th class="p-1  font-sans uppercase border-gray-500 border-r">
                                 ${client.client_id}</th>
@@ -95,7 +101,7 @@ function createSpecialistTable(clients) {
 
     specialist2Clients.map(client => {
         let tr = document.createElement("tr");
-        tr.classList.add("border-b-2", "text-center", "text-xs", "list-item")
+        tr.classList.add("border-b-2", "text-center", "text-xs", "list-item", "hover:bg-gray-800", "hover:text-white", "cursor-default");
         tr.innerHTML = `
                             <th class="p-1  font-sans uppercase border-gray-500 border-r">
                                 ${client.client_id}</th>
@@ -114,21 +120,19 @@ function createSpecialistTable(clients) {
 
 // check for list in local storage
 if(localStorage.length !== 0){
-    let list = localStorage.getItem("list");
-    list = JSON.parse(list);
-    loadData(list);
+    data = getDataFromStorage();
+    loadData(data);
 
-    if (window.location.pathname === "/queue.html") {
+    if (URL === "/queue.html") {
         loadDemoContentBtn.style.display = "none";
     }
 
     // specialist page
-    if (window.location.pathname === "/management.html") {
+    if (URL === "/management.html") {
         //filter people who are waiting
-        const waiting = list.filter(client => !client.being_served)
-        const totalNumberInLine = document.querySelector("#totalWaitingList");
-        totalNumberInLine.textContent = waiting.length;
-        createSpecialistTable(list);
+        const waiting = data.filter(client => !client.being_served)
+        clientsInLine.textContent = waiting.length;
+        createSpecialistTable(data);
     }
 }
 
@@ -137,11 +141,10 @@ if(localStorage.length !== 0){
 // button located in /administrator.html
 if(saveLocalStorageBtn){
     saveLocalStorageBtn.addEventListener("click", (e) => {
-        localStorage.setItem("list", JSON.stringify(demoData));
-        let list = localStorage.getItem("list");
-        list = JSON.parse(list);
+        localStorage.setItem("client_list", JSON.stringify(demoData));
+        data = getDataFromStorage();
 
-        loadData(list);
+        loadData(data);
         e.preventDefault();
     })
 }
@@ -172,14 +175,13 @@ if (registerFormBtn) {
         // true: update list with new item
         // false: save new list to local storage
         if(localStorage.length !== 0){
-            let localData = localStorage.getItem("list");
-            localData = JSON.parse(localData);
-            localData.push(newClient);
-            updateWaitingList(localData);
+            data = getDataFromStorage();
+            data.push(newClient);
+            updateWaitingList(data);
         } else {
             let tempArr = [];
             tempArr.push(newClient);
-            localStorage.setItem("list", JSON.stringify(tempArr));
+            localStorage.setItem("client_list", JSON.stringify(tempArr));
         }
 
         // show id number on screen
@@ -234,7 +236,7 @@ function loadData(data) {
 
         li.classList.add("w-full", "bg-gray-600", "my-2", "py-4", "text-2xl", "text-center", "text-white", "font-bold", "font-sans");
 
-        if (window.location.pathname === "/queue.html") {
+        if (URL === "/queue.html") {
             if(client.being_served){
                 clientBeingServed.textContent = client.client_id;
             } else {
@@ -269,7 +271,7 @@ function clearLocalStorage() {
 
 
 function updateWaitingList(arr) {
-    return localStorage.setItem("list", JSON.stringify(arr))
+    return localStorage.setItem("client_list", JSON.stringify(arr))
 }
 
 
@@ -279,9 +281,8 @@ function generateWaitingId(){
     // true: generate id that would be next number after last item
     // false: start from 1
     if(localStorage.length !== 0){
-        let localData = localStorage.getItem("list");
-        localData = JSON.parse(localData);
-        return localData[localData.length - 1].client_id + 1;
+        data = getDataFromStorage();
+        return data[data.length - 1].client_id + 1;
     } else {
         return 1;
     }
