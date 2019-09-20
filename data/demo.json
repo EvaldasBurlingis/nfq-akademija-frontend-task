@@ -4,16 +4,16 @@
         "client_name": "John",
         "specialist_id": 1,
         "visit_reason": "Siuntos sekimas",
-        "waiting": true,
-        "being_served": true
+        "waiting": false,
+        "being_served": false
     },
     {
         "client_id": 29,
         "client_name": "Samantha",
         "specialist_id": 2,
         "visit_reason": "Kainų skaičiuoklė",
-        "waiting": true,
-        "being_served": true
+        "waiting": false,
+        "being_served": false
     },
     {
         "client_id": 30,
