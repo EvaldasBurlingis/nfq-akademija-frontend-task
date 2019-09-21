@@ -1,57 +1,57 @@
 [
     {
         "client_id": 28,
-        "client_name": "John",
+        "client_name": "Jonas",
         "specialist_id": 1,
-        "visit_reason": "Siuntos sekimas",
+        "visit_reason": "Depozitas",
         "waiting": false,
         "being_served": false
     },
     {
         "client_id": 29,
-        "client_name": "Samantha",
+        "client_name": "Samanta",
         "specialist_id": 2,
-        "visit_reason": "Kainų skaičiuoklė",
+        "visit_reason": "Kita",
         "waiting": false,
         "being_served": false
     },
     {
         "client_id": 30,
-        "client_name": "Peter",
+        "client_name": "Tomas",
         "specialist_id": 2,
-        "visit_reason": "Kainų skaičiuoklė",
+        "visit_reason": "Depozitas",
         "waiting": true,
         "being_served": false
     },
     {
         "client_id": 31,
-        "client_name": "Claire",
+        "client_name": "Mantas",
         "specialist_id": 1,
-        "visit_reason": "Siuntos sekimas",
+        "visit_reason": "Sąskaitos likutis",
         "waiting": true,
         "being_served": false
     },
     {
         "client_id": 32,
-        "client_name": "Laura",
+        "client_name": "Domantė",
         "specialist_id": 2,
-        "visit_reason": "Kainų skaičiuoklė",
+        "visit_reason": "Kita",
         "waiting": true,
         "being_served": false
     },
     {
         "client_id": 33,
-        "client_name": "Peter",
+        "client_name": "Simona",
         "specialist_id": 2,
-        "visit_reason": "Kainų skaičiuoklė",
+        "visit_reason": "Depozitas",
         "waiting": true,
         "being_served": false
     },
     {
         "client_id": 34,
-        "client_name": "Adam",
+        "client_name": "Adomas",
         "specialist_id": 1,
-        "visit_reason": "Kainų skaičiuoklė",
+        "visit_reason": "Kita",
         "waiting": true,
         "being_served": false
     }

@@ -1,3 +1,31 @@
-.text-15xl {
-    font-size: 7rem;
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Typography */
+.text-12xl {
+    font-size: 12rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    color: white;
+}
+
+/* helpers */
+.flex--center {
+    justify-content: center;
+    align-items: center;
+}
+
+/* ANIMATIONS */
+.fade-in {
+    animation: fade-in 200ms ease-in
+}
+
+@keyframes fade-in {
+    0% {opacity: 0}
+    100% {opacity: 1};
 }

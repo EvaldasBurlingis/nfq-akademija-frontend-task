@@ -5,52 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.1.2/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <title>Registracija</title>
 </head>
-<body class="h-screen flex flex-col justify-center items-center w-full bg-gray-300">
-    <main id="register" class="bg-white p-4 lg:p-8 rounded shadow-xl">
-        <h1 class="text-3xl lg:text-6xl font-sans uppercase font-bold text-center">Kliento registracija</h1>
-        <div id="show-queue-number" class="hidden"></div>
-        <!-- Default form register -->
-        <form action="#" id="registerForm" class="w-full max-w-lg mx-auto px-8 pt-6 pb-8 mb-4">
-            <div class="mb-4">
-                <label for="clientName" class="block text-gray-700 text-sm font-bold mb-2">Kliento vardas:</label>
-                <input type="text" id="clientName" placeholder="Vardas" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-            </div>
-
-            <!-- Choose specialist -->
-            <div class="mb-4 relative block">
-                <label for="selectSpecialist" class="block text-gray-700 text-sm font-bold mb-2">Pasirinkti specialistą:</label>
-                <select id="selectSpecialist" required class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                    <option value="1">Specialistas 1</option>
-                    <option value="2">Specialistas 2</option>
-                </select>
-            </div>
-
-            <!-- Choose specialist -->
-            <div class="mb-4 relative block">
-                <label for="visitReason" class="block text-gray-700 text-sm font-bold mb-2">Vizito priežastis:</label>
-                <select id="visitReason" required class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                    <option value="Siuntos sekimas">Siuntos sekimas</option>
-                    <option value="Kainų skaičiuoklė">Kainų skaičiuoklė</option>
-                    <option value="Kita">Kita</option>
-                </select>
-            </div>
-        
-        
-        
-            <!-- Sign up button -->
-            <button type="submit" id="formBtn" class="block px-4 py-2 bg-green-500 text-white rounded font-semibold hover:bg-green-600">Registruoti</button>
-     
-        
-        </form>
-        <!-- Default form register -->
-        <div class="block flex flex-row justify-center">
-            <a href="/" class="px-4 py-2 bg-gray-700 text-white rounded font-semibold hover:bg-gray-800 m-2">Pradinis</a>
-            <a href="/queue.html" class="px-4 py-2 bg-gray-700 text-white rounded font-semibold hover:bg-gray-800 m-2">Laukimo sąrašas</a>
+<body class="h-screen flex flex-col lg:flex-row justify-between items-center w-full bg-gray-200">
+    <nav role="navigation" class="w-full lg:w-24 lg:h-full h-24 bg-purple-700 flex flex--center lg:flex-col flex-row text-white text-3xl">
+        <a href="/" class="h-24 w-24 flex flex--center flex-col hover:bg-purple-900">
+            <i class="fas fa-home"></i>
+            <p class="text-xs">Pradinis</p>
+        </a>
+        <a href="/register.html" class="h-24 w-24 flex flex--center flex-col bg-purple-900">
+            <i class="fas fa-user-plus"></i>
+            <p class="text-xs">Registracija</p>
+        </a>
+        <a href="/queue.html" class="h-24 w-24 flex flex--center flex-col hover:bg-purple-900">
+            <i class="fas fa-list"></i>
+            <p class="text-xs text-center">Švieslentė</p>
+        </a>
+        <a href="/management.html" class="h-24 w-24 flex flex--center flex-col hover:bg-purple-900">
+            <i class="fas fa-users-cog"></i>
+            <p class="text-xs text-center">Administracija</p>
+        </a>
+        <a href="/administrator.html" class="h-24 w-24 flex flex--center flex-col hover:bg-purple-900">
+            <i class="fas fa-sliders-h"></i>
+            <p class="text-xs">Nustatymai</p>
+        </a>
+    </nav>
+        <main id="register" class="p-4 lg:p-16 w-full flex flex--center flex-row h-full">
+            <div class="bg-white p-4 lg:p-16 rounded-lg shadow-xl lg:max-w-2xl h-full w-full">
+            <h1 class="text-3xl lg:text-5xl uppercase font-semibold text-center text-gray-700">Kliento registracija</h1>
+            <div id="show-queue-number" class="hidden text-center"></div>
+            <form action="#" id="registerForm" class="w-full max-w-lg mx-auto px-8 pt-6 pb-8 mb-4">
+                <!-- Kliento vardas -->
+                <div class="mb-4">
+                    <label for="clientName" class="block text-gray-700 text-sm font-bold mb-2">Kliento vardas:</label>
+                    <input type="text" id="clientName" placeholder="Vardas" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <!-- Kliento tipas -->
+                <div class="mb-4 relative block">
+                    <label for="selectSpecialist" class="block text-gray-700 text-sm font-bold mb-2">Kliento tipas:</label>
+                    <select id="selectSpecialist" required class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="1">Verslo klientas</option>
+                        <option value="2">Privatus klientas</option>
+                    </select>
+                </div>
+                <!-- Vizito priežastis -->
+                <div class="mb-4 relative block">
+                    <label for="visitReason" class="block text-gray-700 text-sm font-bold mb-2">Vizito priežastis:</label>
+                    <select id="visitReason" required class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="Sąskaitos likutis">Sąskaitos likutis</option>
+                        <option value="Depozitas">Depozitas</option>
+                        <option value="Kita">Kita</option>
+                    </select>
+                </div>
+                <button type="submit" id="formBtn" class="block btn bg-green-600 hover:bg-green-700">Registruoti</button>
+            </form>
         </div>
-    </main>
+        </main>
     <script src="js/app.js"></script>
 </body>
 </html>

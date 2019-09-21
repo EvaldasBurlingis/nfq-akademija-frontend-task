@@ -188,68 +188,83 @@ if(saveLocalStorageBtn){
 
 
 
-// add new client to queue
-// save it to local storage to be able to display it in queue page
-if (registerFormBtn) {
+// Register new client
+if (URL === "/register.html") {
+
+    const form = document.querySelector("#registerForm");
+    const inputName = document.querySelector("#clientName");
+    const inputSpecialist = document.querySelector("#selectSpecialist");
+    const inputReason = document.querySelector("#visitReason");
+
+    const removeError = () => { inputName.nextSibling.remove() };
+
+    
     registerFormBtn.addEventListener("click", (e) => {
-        // dom elements
-        const form = document.querySelector("#registerForm");
-        const inputName = document.querySelector("#clientName");
-        const inputSpecialist = document.querySelector("#selectSpecialist");
-        const inputReason = document.querySelector("#visitReason");
-
-        form.style.display = "none";
-        
-
-        let newClient = {
-            "client_id": generateWaitingId(),
-            "client_name": inputName.value,
-            "specialist_id": parseInt(inputSpecialist.value),
-            "visit_reason": inputReason.value,
-            "waiting": true,
-            "being_served": false
-        }
-
-        // check if list already exist in local storage
-        // true: update list with new item
-        // false: save new list to local storage
-        if(localStorage.length !== 0){
-            data = getDataFromStorage();
-            data.push(newClient);
-            updateClientList(data);
+        // name validation
+        if (inputName.value === "" || inputName.value.replace(/\s+/g, '') === ""){
+            showValidationError("Šis laukelis negali būti tuščias");
+            setTimeout(removeError, 2000)
+        } else if(!isNaN(inputName.value)) {
+            showValidationError("Klaidinga informacija. Bandykite iš naujo");
+            setTimeout(removeError, 2000)
         } else {
-            let tempArr = [];
-            tempArr.push(newClient);
-            localStorage.setItem("client_list", JSON.stringify(tempArr));
+            let newClient = {
+                "client_id": generateWaitingId(),
+                "client_name": inputName.value,
+                "specialist_id": parseInt(inputSpecialist.value),
+                "visit_reason": inputReason.value,
+                "waiting": true,
+                "being_served": false
+            }
+            form.style.display = "none";
+
+            if (localStorage.length !== 0) {
+                data = getDataFromStorage();
+                data.push(newClient);
+                updateClientList(data);
+            } else {
+                let tempArr = [];
+                tempArr.push(newClient);
+                localStorage.setItem("client_list", JSON.stringify(tempArr));
+            }
+
+            // after registration show waiting number
+            showWaitingListNum(newClient.client_id);
         }
-
-        // show id number on screen
-        showIdNumber(newClient.client_id);
-
         e.preventDefault();
     })
 }
 
-function showIdNumber(clientId) {
-    // const main = document.querySelector("#register");
+function showValidationError(msg){
+    const input = document.querySelector("#clientName");
+    const p = document.createElement("p");
+
+    p.classList.add("text-red-500", "text-xs", "italics", "mt-2");
+    p.setAttribute("id", "validationError");
+    p.textContent = msg;
+    input.parentNode.insertBefore(p, input.nextSibling);  
+}
+
+function showWaitingListNum(queueNum) {
     const div = document.querySelector("#show-queue-number");
-    let h1 = document.createElement("h1");
-    let p = document.createElement("p");
+    const h2 = document.createElement("h2");
+    const span = document.createElement("span");
+    const button = document.createElement("a");
 
-    // add styling classses to elements
     div.classList.remove("hidden");
-    div.classList.add("h-64", "w-full", "flex", "flex-col", "justify-center", "items-center", "mb-4");
 
-    p.classList.add("text-xl", "text-gray-700", "uppercase", "underline", "leading-loose", "font-semibold", "w-full", "text-left");
-    p.textContent = "Jūsų eilės nr:";
+    h2.classList.add("text-2xl", "font-semibold", "uppercase", "mt-4");
+    span.classList.add("w-full", "flex", "flex--center", "h-64", "text-12xl", "fade-in");
+    button.classList.add("btn", "bg-purple-700", "hover:bg-purple-900");
+    button.setAttribute("href", "/queue.html");
 
-    h1.classList.add("text-15xl", "p-2", "bg-green-500", "text-white", "font-bold", "font-sans", "block", "w-full", "text-center")
-    h1.textContent = clientId;
+    h2.textContent = "Jūsų eilės nr:";
+    button.textContent = "Laukimo sąrašas";
+    span.textContent = queueNum;
 
-    div.appendChild(p);
-    div.appendChild(h1);
-
-    
+    div.appendChild(h2)
+    div.appendChild(span);  
+    div.appendChild(button);
 }
 
 // load demo data on click
