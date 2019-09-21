@@ -1,28 +1,52 @@
-// waiting = true , being_served = false -> client is waiting in line
-//waiting = false, beng_served = false -> client is currently being served and not waiting in line
-//waiting = false, being_served = true -> client was served and is removed from waiting line
+// waiting = true , being_served = false -> client is waiting in line -> Laukia (geltona)
+//waiting = false, beng_served = false -> client is currently being served and not waiting in line -> Aptarnaujamas (melyna)
+//waiting = false, being_served = true -> client was served and is removed from waiting line -> Aptarnautas (zalia)
 
 
-
-//  DOM ELEMENTS
 const loadDemoContentBtn = document.querySelector("#loadDemoContentBtn")
 const saveLocalStorageBtn = document.querySelector("#saveLocalStorageBtn");
 const registerFormBtn = document.querySelector("#formBtn");
 const clientsInLine = document.querySelector("#totalWaitingList");
 const servedBtn = document.getElementsByClassName("servedBtn");
 
-// VARIABLES
 const URL = window.location.pathname;
+// VARIABLES
 let demoData = [];
 let data;
 
+const clearLocalStorage = () => { localStorage.clear(); }
+const updateClientList = (arr) => { localStorage.setItem("client_list", JSON.stringify(arr)) };
+const clearClientsInLine = () => { return clientsInLine.textContent = "0" };
+const numOfClientsInLine = (data) => {
+    const waiting = data.filter(client => client.waiting === true && client.being_served === false);
+    clientsInLine.textContent = waiting.length
+}
 
-
+// management page react to changes
 if(URL === "/management.html"){
+    data = getDataFromStorage();
     document.addEventListener('click', function (e) {
         if (e.target && e.target.classList.contains("servedBtn")) {
-           let =  e.target.parentElement.parentElement.getAttribute("data-key");
-            e.target.parentElement.parentElement.style.background = "red";
+           let id =  e.target.parentElement.parentElement.getAttribute("data-key");
+           id = parseInt(id);
+           data.map(client => {
+               if(client.client_id === id){
+                // aptarnaujamas
+                // laukia
+                // aptarnautas
+                if(!client.waiting && !client.being_served) {
+                    client.being_served = true;
+                } else if(client.waiting && !client.being_served){
+                    client.waiting = false;
+                } else if (!client.waiting && client.being_served) {
+                    client.waiting = false;
+                }
+               }
+           })
+            clearSpecialistList();
+            updateClientList(data);
+            createSpecialistTable(data);
+            numOfClientsInLine(data);
         }
     });
 }
@@ -37,20 +61,19 @@ if(URL === "/management.html"){
 })();
 
 
+
 // watch for changes in localStorage
 window.addEventListener("storage", () => {
     if (localStorage.length !== 0) {
         data = getDataFromStorage();
-
         if(URL === "/queue.html") {
             clearWaitingList();
             loadWaitingPage(data);
         } 
         
         if (URL === "/management.html") {
+            const waiting = data.filter(client => client.waiting && client.being_served)
             //filter people who are waiting
-            const waiting = data.filter(client => client.waiting === true)
-            clientsInLine.textContent = waiting.length;
             clearSpecialistList();
             createSpecialistTable(data);
         }
@@ -61,7 +84,8 @@ window.addEventListener("storage", () => {
 
         if(URL === "/management.html"){
             clearSpecialistList();
-            clientsInLine.textContent = "0";
+            clearClientsInLine()
+            
         }
     }
 })
@@ -76,7 +100,7 @@ if (localStorage.length !== 0) {
     }
 
     if (URL === "/management.html") {
-        const waiting = data.filter(client => client.waiting === true)
+        const waiting = data.filter(client => client.waiting === true);
         clientsInLine.textContent = waiting.length;
         createSpecialistTable(data);
     }
@@ -91,21 +115,50 @@ function createSpecTable(specialist, clients) {
 
 
     clients.forEach(client => {
+        const { 
+            client_id: id,
+            client_name: name,
+            visit_reason: reason,
+            waiting: isWaiting,
+            being_served: hasBeingServed
+        } = client;
+
+        let status;
+        let btnStatus;
+        let btnColor;
         let tr = document.createElement("tr");
+
+        if(isWaiting === true && hasBeingServed === false) {
+            status = "Laukia";
+            btnStatus = "Kviesti";
+            btnColor = "bg-yellow-600";
+        } else if(isWaiting === false && hasBeingServed === false ) {
+            status = "Aptarnaujamas";
+            btnStatus = "Aptarnautas";
+            btnColor = "bg-blue-600";
+        } else if(isWaiting === false && hasBeingServed === true ) {
+            status = "Aptarnautas";
+            btnStatus = "Baigta";
+            btnColor = "bg-gray-600";
+        }
+
         tr.classList.add("border-b-2", "text-center", "text-xs", "font-normal", "list-item", "hover:bg-gray-800", "hover:text-white", "cursor-default");
-        tr.setAttribute("data-key", client.client_id);
+        tr.setAttribute("data-key", id);
         tr.innerHTML = `
-                            <th class="font-sans uppercase border-gray-500 border-r">
-                                ${client.client_id}</th>
-                            <th class="font-sans uppercase border-gray-500 border-r">
-                                ${client.client_name}</th>
-                            <th class="font-sans uppercase border-gray-500 border-r">
-                                ${client.visit_reason}</th>
-                            <th class="font-sans uppercase border-gray-500 border-r">
-                                ${client.waiting ? "Laukia" : "Aptarnaujamas"}</th>
-                            <th class="border-gray-500 border-r ">
-                                <button class="bg-green-600 w-full h-full text-white servedBtn">${client.being_served ? "Kvieciamas" : "Aptarnautas" }</button>
-                            </th>
+            <th class="font-sans uppercase border-gray-500 border-r">
+                ${id}</th>
+            <th class="font-sans uppercase border-gray-500 border-r">
+                ${name}</th>
+            <th class="font-sans uppercase border-gray-500 border-r">
+                ${reason}</th>
+            <th class="font-sans uppercase border-gray-500 border-r">
+                ${status}
+            </th>
+            <th class="border-gray-500 border-r ">
+                <button class="w-full h-full text-white servedBtn ${btnColor}">
+                    ${btnStatus}
+                </button>
+            </th>
         `
         table.appendChild(tr);
     })
@@ -223,9 +276,9 @@ function loadWaitingPage(data) {
         li.classList.add("w-full", "bg-gray-600", "my-2", "py-4", "text-2xl", "text-center", "text-white", "font-bold", "font-sans");
 
         if (URL === "/queue.html") {
-            if(!client.waiting){
+            if(!client.waiting && !client.being_served){
                 clientBeingServed.textContent = client.client_id;
-            } else {
+            } else if(client.waiting) {
                 // if client is waiting add him to waiting queue
                 li.textContent = client.client_id;
                 waitingList.appendChild(li);
@@ -256,17 +309,6 @@ function clearSpecialistList() {
     spec2Table.innerHTML = "";
 
 }
-
-
-function clearLocalStorage() {
-    return localStorage.clear();
-}
-
-
-function updateClientList(arr) {
-    return localStorage.setItem("client_list", JSON.stringify(arr))
-}
-
 
 // generate id that will be used to manage queue
 function generateWaitingId(){
