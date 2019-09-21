@@ -37,4 +37,6 @@ Jei jau esate instaliavęs git, atsidarykite terminal langą kompiuteryje ir nuk
 
  ## Projektas sukurtas naudojant
 
- * [TailwindCSS](https://tailwindcss.com) - stilizuotas css dizainas, greitesniam projekto sukūrimui
+ * [TailwindCSS](https://tailwindcss.com) - CSS Framework
+ * [FontAwesome](https://fontawesome.com/) - Ikonos
+ * [Iliustracijos](https://www.freepik.com/) - Ikonos

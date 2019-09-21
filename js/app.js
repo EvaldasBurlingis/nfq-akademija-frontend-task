@@ -189,7 +189,7 @@ if(saveLocalStorageBtn){
 
 
 // Register new client
-if (URL === "/register.html") {
+if (URL === "/") {
 
     const form = document.querySelector("#registerForm");
     const inputName = document.querySelector("#clientName");
