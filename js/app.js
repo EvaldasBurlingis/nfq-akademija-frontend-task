@@ -7,6 +7,7 @@ const loadDemoContentBtn = document.querySelector("#loadDemoContentBtn")
 const saveLocalStorageBtn = document.querySelector("#saveLocalStorageBtn");
 const registerFormBtn = document.querySelector("#formBtn");
 const clientsInLine = document.querySelector("#totalWaitingList");
+const clientsServed = document.querySelector("#totalCustomersServed");
 const servedBtn = document.getElementsByClassName("servedBtn");
 
 const URL = window.location.pathname;
@@ -20,6 +21,11 @@ const clearClientsInLine = () => { return clientsInLine.textContent = "0" };
 const numOfClientsInLine = (data) => {
     const waiting = data.filter(client => client.waiting === true && client.being_served === false);
     clientsInLine.textContent = waiting.length
+}
+
+const numOfCLientsServed = (data) => {
+    const total = data.filter(client => client.being_served);
+    clientsServed.textContent = total.length;
 }
 
 // management page react to changes
@@ -47,6 +53,7 @@ if(URL === "/management.html"){
             updateClientList(data);
             createSpecialistTable(data);
             numOfClientsInLine(data);
+            numOfCLientsServed(data);
         }
     });
 }
@@ -76,6 +83,7 @@ window.addEventListener("storage", () => {
             //filter people who are waiting
             clearSpecialistList();
             createSpecialistTable(data);
+            numOfCLientsServed(data);
         }
     } else {
         if (URL === "/queue.html") {
@@ -85,6 +93,7 @@ window.addEventListener("storage", () => {
         if(URL === "/management.html"){
             clearSpecialistList();
             clearClientsInLine()
+
             
         }
     }
@@ -103,6 +112,7 @@ if (localStorage.length !== 0) {
         const waiting = data.filter(client => client.waiting === true);
         clientsInLine.textContent = waiting.length;
         createSpecialistTable(data);
+        numOfCLientsServed(data);
     }
 }
 
@@ -145,17 +155,17 @@ function createSpecTable(specialist, clients) {
         tr.classList.add("border-b-2", "text-center", "text-xs", "font-normal", "list-item", "hover:bg-gray-800", "hover:text-white", "cursor-default");
         tr.setAttribute("data-key", id);
         tr.innerHTML = `
-            <th class="font-sans uppercase border-gray-500 border-r">
+            <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r">
                 ${id}</th>
-            <th class="font-sans uppercase border-gray-500 border-r">
+            <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r">
                 ${name}</th>
-            <th class="font-sans uppercase border-gray-500 border-r">
+            <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r">
                 ${reason}</th>
-            <th class="font-sans uppercase border-gray-500 border-r">
+            <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r">
                 ${status}
             </th>
-            <th class="border-gray-500 border-r ">
-                <button class="w-full h-full text-white servedBtn ${btnColor}">
+            <th class="border-gray-500 border-r">
+                <button class="w-full py-2  h-full text-white servedBtn ${btnColor}">
                     ${btnStatus}
                 </button>
             </th>

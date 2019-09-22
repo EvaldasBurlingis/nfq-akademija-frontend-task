@@ -44,3 +44,21 @@ body {
 .shadow-xxl {
     box-shadow: 0 0 3rem rgba(0,0,0,0.25);
 }
+
+.bg--gradient__purple {
+    background: #44337a;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #44337a, #513e92);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #44337a, #513e92); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+}
+
+@media (min-width: 1200px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
