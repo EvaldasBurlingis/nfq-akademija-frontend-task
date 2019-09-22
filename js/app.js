@@ -83,6 +83,7 @@ window.addEventListener("storage", () => {
             //filter people who are waiting
             clearSpecialistList();
             createSpecialistTable(data);
+            numOfClientsInLine(data);
             numOfCLientsServed(data);
         }
     } else {
