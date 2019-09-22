@@ -68,3 +68,7 @@ body {
         display: none;
     }
 }
+
+.text-8xl {
+    font-size: 6rem;
+}

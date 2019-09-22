@@ -265,7 +265,7 @@ function showWaitingListNum(queueNum) {
     div.classList.remove("hidden");
 
     h2.classList.add("text-2xl", "font-semibold", "uppercase", "mt-4");
-    span.classList.add("w-full", "flex", "flex--center", "h-64", "text-12xl", "fade-in");
+    span.classList.add("w-full", "flex", "flex--center", "h-64", "text-12xl");
     button.classList.add("btn", "bg-purple-700", "hover:bg-purple-900");
     button.setAttribute("href", "/queue.html");
 
@@ -299,11 +299,11 @@ function loadWaitingPage(data) {
         const waitingList = document.querySelector(client.specialist_id === 1 ? "#specialist1_queue" : "#specialist2_queue");
         let li = document.createElement("li");
 
-        li.classList.add("w-full", "bg-gray-600", "my-2", "py-4", "text-2xl", "text-center", "text-white", "font-bold", "font-sans");
+        li.classList.add("w-full", "bg-purple-500", "my-2", "py-4", "text-3xl", "text-center", "text-white");
 
         if (URL === "/queue.html") {
             if(!client.waiting && !client.being_served){
-                clientBeingServed.textContent = client.client_id;
+                clientBeingServed.textContent = `${client.client_id}`;
             } else if(client.waiting) {
                 // if client is waiting add him to waiting queue
                 li.textContent = client.client_id;
