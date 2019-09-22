@@ -1,11 +1,9 @@
 // waiting = true , being_served = false -> client is waiting in line -> Laukia (geltona)
 //waiting = false, beng_served = false -> client is currently being served and not waiting in line -> Aptarnaujamas (melyna)
 //waiting = false, being_served = true -> client was served and is removed from waiting line -> Aptarnautas (zalia)
-
-
-const loadDemoContentBtn = document.querySelector("#loadDemoContentBtn")
+// DOM ELEMENTS
 const saveLocalStorageBtn = document.querySelector("#saveLocalStorageBtn");
-const registerFormBtn = document.querySelector("#formBtn");
+const registerFormSubmitBtn = document.querySelector("#formBtn");
 const clientsInLine = document.querySelector("#totalWaitingList");
 const clientsServed = document.querySelector("#totalCustomersServed");
 const servedBtn = document.getElementsByClassName("servedBtn");
@@ -14,49 +12,6 @@ const URL = window.location.pathname;
 // VARIABLES
 let demoData = [];
 let data;
-
-const clearLocalStorage = () => { localStorage.clear(); }
-const updateClientList = (arr) => { localStorage.setItem("client_list", JSON.stringify(arr)) };
-const clearClientsInLine = () => { return clientsInLine.textContent = "0" };
-const numOfClientsInLine = (data) => {
-    const waiting = data.filter(client => client.waiting === true && client.being_served === false);
-    clientsInLine.textContent = waiting.length
-}
-
-const numOfCLientsServed = (data) => {
-    const total = data.filter(client => client.being_served);
-    clientsServed.textContent = total.length;
-}
-
-// management page react to changes
-if(URL === "/management.html"){
-    data = getDataFromStorage();
-    document.addEventListener('click', function (e) {
-        if (e.target && e.target.classList.contains("servedBtn")) {
-           let id =  e.target.parentElement.parentElement.getAttribute("data-key");
-           id = parseInt(id);
-           data.map(client => {
-               if(client.client_id === id){
-                // aptarnaujamas
-                // laukia
-                // aptarnautas
-                if(!client.waiting && !client.being_served) {
-                    client.being_served = true;
-                } else if(client.waiting && !client.being_served){
-                    client.waiting = false;
-                } else if (!client.waiting && client.being_served) {
-                    client.waiting = false;
-                }
-               }
-           })
-            clearSpecialistList();
-            updateClientList(data);
-            createSpecialistTable(data);
-            numOfClientsInLine(data);
-            numOfCLientsServed(data);
-        }
-    });
-}
 
 // Fetch data from JSON
 (function fetchData() {
@@ -67,6 +22,50 @@ if(URL === "/management.html"){
         .catch(err => console.log(err))
 })();
 
+
+const clearLocalStorage = () => { localStorage.clear(); }
+const updateClientList = (arr) => { localStorage.setItem("client_list", JSON.stringify(arr)) };
+const clearClientsInLine = () => { return clientsInLine.textContent = "0" };
+const numOfClientsInLine = (data) => {
+    const clientsWaiting = data.filter(client => client.waiting === true && client.being_served === false);
+    clientsInLine.textContent = clientsWaiting.length
+}
+const numOfCLientsServed = (data) => {
+    const totalClientsServed = data.filter(client => client.being_served);
+    clientsServed.textContent = totalClientsServed.length;
+}
+
+// MANAGEMENT PAGE REACT TO CLICK ON STATUS BUTTONS
+if(URL === "/management.html"){
+    data = getDataFromStorage();
+    document.addEventListener('click', function (e) {
+        // check if click is status button
+        if (e.target.classList.contains("servedBtn")) {
+           let clientID =  e.target.parentElement.parentElement.getAttribute("data-key");
+           clientID = parseInt(clientID);
+
+           data.map(client => {
+               if(client.client_id === clientID){
+
+                    if(!client.waiting && !client.being_served) {
+                        client.being_served = true; // aptarnaujamas
+                    } else if(client.waiting && !client.being_served){
+                        client.waiting = false; // laukia
+                    } else if (!client.waiting && client.being_served) {
+                        client.waiting = false; // aptarnautas
+                    }
+
+                 }
+            })
+
+            clearManagementTable();
+            updateClientList(data);
+            createSpecialistTable(data);
+            numOfClientsInLine(data);
+            numOfCLientsServed(data);
+        }
+    });
+}
 
 
 // watch for changes in localStorage
@@ -79,9 +78,8 @@ window.addEventListener("storage", () => {
         } 
         
         if (URL === "/management.html") {
-            const waiting = data.filter(client => client.waiting && client.being_served)
             //filter people who are waiting
-            clearSpecialistList();
+            clearManagementTable();
             createSpecialistTable(data);
             numOfClientsInLine(data);
             numOfCLientsServed(data);
@@ -92,7 +90,7 @@ window.addEventListener("storage", () => {
         }
 
         if(URL === "/management.html"){
-            clearSpecialistList();
+            clearManagementTable();
             clearClientsInLine()
 
             
@@ -100,19 +98,17 @@ window.addEventListener("storage", () => {
     }
 })
 
-// check data in localStorage if app was re-entered after web browser was closed
+// CHECK LOCAL STORAGE FOR DATA
 if (localStorage.length !== 0) {
     data = getDataFromStorage();
-    loadWaitingPage(data);
 
     if (URL === "/queue.html") {
-        loadDemoContentBtn.style.display = "none";
+        loadWaitingPage(data);
     }
 
     if (URL === "/management.html") {
-        const waiting = data.filter(client => client.waiting === true);
-        clientsInLine.textContent = waiting.length;
         createSpecialistTable(data);
+        numOfClientsInLine(data);
         numOfCLientsServed(data);
     }
 }
@@ -122,9 +118,6 @@ if (localStorage.length !== 0) {
 // /management.html page
 function createSpecTable(specialist, clients) {
     let table = document.querySelector(`${specialist === 1 ? "#spec1Table" : "#spec2Table"}`);
-
-
-
     clients.forEach(client => {
         const { 
             client_id: id,
@@ -138,6 +131,7 @@ function createSpecTable(specialist, clients) {
         let btnStatus;
         let btnColor;
         let tr = document.createElement("tr");
+        let thClasses = `py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r`; 
 
         if(isWaiting === true && hasBeingServed === false) {
             status = "Laukia";
@@ -153,16 +147,18 @@ function createSpecTable(specialist, clients) {
             btnColor = "bg-gray-600";
         }
 
+        
+
         tr.classList.add("border-b-2", "text-center", "text-xs", "font-normal", "list-item", "hover:bg-gray-800", "hover:text-white", "cursor-default");
         tr.setAttribute("data-key", id);
         tr.innerHTML = `
-            <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r">
+            <th class="${thClasses}">
                 ${id}</th>
-            <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r hide-sm">
+            <th class="${thClasses + " hide-sm"}">
                 ${name}</th>
-            <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r hide-sm">
+            <th class="${thClasses + " hide-sm"}">
                 ${reason}</th>
-            <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r">
+            <th class="${thClasses}">
                 ${status}
             </th>
             <th class="border-gray-500 border-r">
@@ -171,6 +167,7 @@ function createSpecTable(specialist, clients) {
                 </button>
             </th>
         `
+
         table.appendChild(tr);
     })
 }
@@ -210,7 +207,7 @@ if (URL === "/") {
     const removeError = () => { inputName.nextSibling.remove() };
 
     
-    registerFormBtn.addEventListener("click", (e) => {
+    registerFormSubmitBtn.addEventListener("click", (e) => {
         // name validation
         if (inputName.value === "" || inputName.value.replace(/\s+/g, '') === ""){
             showValidationError("Šis laukelis negali būti tuščias");
@@ -327,7 +324,7 @@ function clearWaitingList(){
     }
 }
 
-function clearSpecialistList() {
+function clearManagementTable() {
     const spec1Table = document.querySelector("#spec1Table");
     const spec2Table = document.querySelector("#spec2Table");
 

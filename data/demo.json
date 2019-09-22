@@ -5,7 +5,7 @@
         "specialist_id": 1,
         "visit_reason": "Depozitas",
         "waiting": false,
-        "being_served": false
+        "being_served": true
     },
     {
         "client_id": 2,
@@ -28,7 +28,7 @@
         "client_name": "Mantas",
         "specialist_id": 1,
         "visit_reason": "Sąskaitos likutis",
-        "waiting": true,
+        "waiting": false,
         "being_served": false
     },
     {
