@@ -157,9 +157,9 @@ function createSpecTable(specialist, clients) {
         tr.innerHTML = `
             <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r">
                 ${id}</th>
-            <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r">
+            <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r hide-sm">
                 ${name}</th>
-            <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r">
+            <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r hide-sm">
                 ${reason}</th>
             <th class="py-2 uppercase text-xs md:text-md text-normal border-gray-500 border-r">
                 ${status}
