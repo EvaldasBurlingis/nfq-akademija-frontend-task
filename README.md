@@ -1,5 +1,3 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/84db8bca-e3de-4338-a388-5fb9cf3cc7ac/deploy-status)](https://app.netlify.com/sites/jovial-leavitt-ff4ba0/deploys)
-
 # NFQ 2019 Rudens Stojimo užduotis FRONTEND
 
 Šis projektas imituos priėmimo langelius, kurie yra naudojami ligoninėse, bankuose, paštuose ir t.t.
